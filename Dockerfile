@@ -1,10 +1,10 @@
 FROM balenalib/raspberry-pi-python:3.7.9-buster
 
-# This will copy all files in our root to the working directory in the container
-COPY . ./app
-
 # Set our working directory
 WORKDIR /app
+
+# This will copy all files in our root to the working directory in the container
+COPY . ./app
 
 # Enable udevd so that plugged dynamic hardware devices show up in our container. (???)
 ENV UDEV=1

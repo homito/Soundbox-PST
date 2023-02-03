@@ -1,6 +1,7 @@
 #test program
-print("Hello, world!")
+import time
 
-x = input('Input text here')
-print(x)
+while(1):
+    print("Hello, world!")
+    time.sleep(3)
 
