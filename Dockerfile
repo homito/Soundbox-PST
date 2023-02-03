@@ -6,8 +6,8 @@ WORKDIR /app
 # This will copy all files in our root to the working directory in the container
 COPY . ./app
 
-# Enable udevd so that plugged dynamic hardware devices show up in our container. (???)
-ENV UDEV=1
+# Install required packages
+RUN pip install -r requirements.txt
 
 # main.py will run when container starts up on the device
 CMD [ "python", "src/main.py" ]
