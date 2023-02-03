@@ -1,4 +1,3 @@
-
 FROM balenalib/raspberry-pi-python:3.7.9-buster
 
 # This will copy all files in our root to the working directory in the container
@@ -12,7 +11,6 @@ ENV UDEV=1
 
 # main.py will run when container starts up on the device
 CMD [ "python", "src/main.py" ]
-
 
 
 # Important sources : 
