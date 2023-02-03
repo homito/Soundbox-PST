@@ -64,6 +64,11 @@ services:
     volumes:
       - spotifycache:/var/cache/raspotify
 
+  python:
+    build: ./plugins/python
+    restart: on-failure
+    privileged: true
+
   # https://github.com/balenablocks/hostname
   hostname:
     build: ./core/hostname
