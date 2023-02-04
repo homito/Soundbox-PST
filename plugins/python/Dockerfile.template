@@ -2,11 +2,11 @@ FROM balenalib/raspberry-pi-debian-python:latest
 
 WORKDIR /usr/src
 
-RUN ["/bin/bash", "-c", "echo Starting Python plugin..."]
+#RUN ["/bin/bash", "-c", "echo Starting Python plugin..."]
 
 # COPY requirements.txt ./
 # RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY src/ .
 
-CMD ["python", "src/main.py"]
+CMD ["python", "main.py"]

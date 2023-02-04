@@ -65,7 +65,9 @@ services:
       - spotifycache:/var/cache/raspotify
 
   python:
-    build: ./plugins/python
+    build:
+      context: .
+      dockerfile: ./plugins/python/Dockerfile.template
     restart: on-failure
     privileged: true
 
