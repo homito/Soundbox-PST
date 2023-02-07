@@ -39,12 +39,15 @@ echo "Device name: $SOUND_DEVICE_NAME"
 [[ -z "$SOUND_SPOTIFY_DISABLE_NORMALISATION" ]] && echo "Volume normalization enabled."
 [[ -z "$SOUND_SPOTIFY_ENABLE_CACHE" ]] && echo "Spotify audio cache disabled."
 
+chmod a+x /usr/src/script.sh
+
 set -- /usr/bin/librespot \
   --backend pulseaudio \
   --name "$SOUND_DEVICE_NAME" \
   --bitrate "$SOUND_SPOTIFY_BITRATE" \
   --cache /var/cache/raspotify \
   --volume-ctrl linear \
+  --onevent /usr/src/script.sh \
   "$@"
 
 exec "$@"
