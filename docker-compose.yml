@@ -48,6 +48,8 @@ services:
       - NET_ADMIN
     labels:
       io.balena.features.dbus: 1
+    volumes:
+      - commons:/shared
 
   airplay:
     build: ./plugins/airplay

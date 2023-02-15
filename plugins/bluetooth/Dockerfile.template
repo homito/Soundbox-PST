@@ -3,5 +3,14 @@ FROM bh.cr/balenalabs/bluetooth-%%BALENA_ARCH%%
 WORKDIR /usr/src
 
 COPY start.sh /usr/src/
+
+COPY bluetooth-agent.py /usr/src/
+RUN chmod a+x /usr/src/bluetooth-agent.py
+
+COPY metadata.py /usr/src/
+RUN chmod a+x /usr/src/metadata.py
+
 COPY restartpair.sh /usr/src/
+RUN chmod a+x /usr/src/restartpair.sh 
+
 CMD [ "/bin/bash", "/usr/src/start.sh" ]

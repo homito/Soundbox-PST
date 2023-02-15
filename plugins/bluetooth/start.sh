@@ -5,4 +5,4 @@ if [[ -n "$SOUND_DISABLE_BLUETOOTH" ]]; then
   exit 0
 fi
 
-exec /usr/src/bluetooth-agent
+exec /usr/src/bluetooth-agent.py
