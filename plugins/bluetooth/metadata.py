@@ -14,3 +14,8 @@ obj = bus.get_object('org.bluez', '/org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/player0
 iface = dbus.Interface(obj, 'org.bluez.MediaPlayer1')
 metadata = iface.Get('org.bluez.MediaPlayer1', 'Metadata')
 print(metadata)
+
+with open('metadata.txt','w') as file:
+    for line in metadata:
+        file.writelines(metadata)
+    print("metadata written")
