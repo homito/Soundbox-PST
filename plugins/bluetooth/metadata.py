@@ -1,21 +1,28 @@
-import dbus
+import time
 
-with open("test.txt", "r") as f:
-    line = f.readline()
-    parts = line.split(":")
-    bus_name = parts[0]
-    object_name = parts[1]
+metadata = {
+    "title": "Seul la musique",
+    "artist_name": "Frank",
+    "album_name": "La folle aventure de Seul",
+    "status": "paused"
+}    
 
-bus_name = ""
-object_name = ""
+with open('metadata.py', 'w') as file:
+    with open('output.txt', 'r') as f:
+        while True:
+            line = f.readline()
+            file.writelines(line)
+            if not line:
+                time.sleep(0.1)
+                continue
+            print(line + 'written')
 
-bus = dbus.SystemBus()
-obj = bus.get_object('org.bluez', '/org/bluez/hci0/dev_XX_XX_XX_XX_XX_XX/player0')
-iface = dbus.Interface(obj, 'org.bluez.MediaPlayer1')
-metadata = iface.Get('org.bluez.MediaPlayer1', 'Metadata')
-print(metadata)
+# with open("output.txt", "r") as f:
+#     metadata["title"] = "dinde"
+#     metadata["artist_name"] = "dinde"
+#     metadata["album_name"] = "dinde"
+#     metadata["status"] = "dinde"
 
-with open('metadata.txt','w') as file:
-    for line in metadata:
-        file.writelines(metadata)
-    print("metadata written")
+# with open('metadata.txt','w') as file:
+#     metadata["title"]
+#     print("metadata written")

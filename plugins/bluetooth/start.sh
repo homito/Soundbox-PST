@@ -6,5 +6,3 @@ if [[ -n "$SOUND_DISABLE_BLUETOOTH" ]]; then
 fi
 
 exec /usr/src/bluetooth-agent.py
-
-exec /usr/src/metadata.py
