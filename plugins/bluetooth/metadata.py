@@ -17,6 +17,10 @@ with open('metadata.py', 'w') as file:
                 continue
             print(line + 'written')
 
+
+with open('output.txt', 'r') as file:
+    
+
 # with open("output.txt", "r") as f:
 #     metadata["title"] = "dinde"
 #     metadata["artist_name"] = "dinde"
