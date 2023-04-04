@@ -31,6 +31,25 @@ def follow(thefile):
 
         yield line
 
+def line_anal(line):
+    # this function analyzes the content of each line and
+    # uptades the metadata dictionnary according to the current info
+    if line[0:5] == "[CHG]":
+        split = str.split()
+        key = split[3]
+        key = key[0:len(key)-1]
+
+        value = []
+        for i in range(0, len(split)-4):
+            value.append(split[4+i])
+        value = ' '.join(value)
+
+        metadata[key] = value
+        return 1
+    return 0
+
+
+
 logfile = open("test.txt", "r")
 loglines = follow(logfile)
 
