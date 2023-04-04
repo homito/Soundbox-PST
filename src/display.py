@@ -47,11 +47,14 @@ def displayMusicName():
 def displayMusicDuration():
     timestampMs = metadata["Position"].split()
     timestampMs = timestampMs[1]
+    durationMS = metadata["Duration"].split()
+    durationMS = durationMS[1]
     
-    draw.text((0, 0), "hh:mm:ss/hh:mm:ss", fill="white")
+    draw.text((0, 0), ConvertMS(timestampMs) +"/"+ ConvertMS(durationMS), fill="white")
 
 def displaySound():
-    sound = 69
+    sound = metadata["Volume"]
+    
     draw.text((0, 0), sound, fill="white")
 
 def displayInit():
@@ -78,7 +81,7 @@ def ConvertMS(miliseconds):
     hours = roundDown(minutes/60)
     minutes = minutes - hours*60
 
-    time[]
+    time = []
     if hours>0:
         time.append(str(hours)+':')
         if minutes<10:
@@ -88,6 +91,7 @@ def ConvertMS(miliseconds):
         time.append('0')
     time.append(str(seconds))
 
+    time = ''.join(time)
     return time
 
 # -------- 
