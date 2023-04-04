@@ -7,9 +7,6 @@ COPY start.sh /usr/src/
 COPY bluetooth-agent.py /usr/src/
 RUN chmod a+x /usr/src/bluetooth-agent.py
 
-COPY metadata.py /usr/src/
-RUN chmod a+x /usr/src/metadata.py
-
 COPY restartpair.sh /usr/src/
 RUN chmod a+x /usr/src/restartpair.sh 
 
