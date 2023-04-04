@@ -6,6 +6,8 @@ from luma.core.render import canvas
 from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
 import time
 
+from metadata import metadata
+
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial, rotate=0)
 
@@ -38,12 +40,14 @@ def displayService():
     draw.text((0, 0), service, fill="white")
 
 def displayMusicName():
-    name = "never gonna give you up - Rick Astley"
-    draw.text((0, 0), name, fill="white")
+    draw.text((0, 0), metadata["Title"], fill="white")
 
 
 
 def displayMusicDuration():
+    timestampMs = metadata["Position"].split()
+    timestampMs = timestampMs[1]
+    
     draw.text((0, 0), "hh:mm:ss/hh:mm:ss", fill="white")
 
 def displaySound():
@@ -58,6 +62,33 @@ def displayInit():
 def displayTurningOff():
     with canvas(device) as draw:
         draw.text((0, 0), "Goodbye", fill="white")
+
+def roundDown(var):
+    if round(var) != round(var-0.5):
+        return round(var-0.5)
+    return round(var)
+
+def ConvertMS(miliseconds):
+    # convert a time in miliseconds to one in hh:mm:ss format
+    seconds = roundDown(miliseconds/1000)
+
+    minutes = roundDown(seconds/60)
+    seconds = seconds - minutes*60
+
+    hours = roundDown(minutes/60)
+    minutes = minutes - hours*60
+
+    time[]
+    if hours>0:
+        time.append(str(hours)+':')
+        if minutes<10:
+            time.append(0)
+    time.append(str(minutes)+':')
+    if seconds<10:
+        time.append('0')
+    time.append(str(seconds))
+
+    return time
 
 # -------- 
 displayInit()
