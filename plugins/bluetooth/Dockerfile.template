@@ -4,9 +4,6 @@ WORKDIR /usr/src
 
 COPY start.sh /usr/src/
 
-COPY bluetooth-agent.py /usr/src/
-RUN chmod a+x /usr/src/bluetooth-agent.py
-
 COPY restartpair.sh /usr/src/
 RUN chmod a+x /usr/src/restartpair.sh 
 
