@@ -7,5 +7,4 @@ COPY start.sh /usr/src/
 COPY restartpair.sh /usr/src/
 RUN chmod a+x /usr/src/restartpair.sh 
 
-CMD [ "/bin/bash", "bluetoothctl >> /shared/logs/bluetooth.logs"]
-CMD [ "/bin/bash", "/usr/src/start.sh" ]
+CMD [ "/bin/bash", "/usr/src/start.sh && bluetoothctl >> /shared/logs/bluetooth.logs" ]
