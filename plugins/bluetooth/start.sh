@@ -5,5 +5,5 @@ if [[ -n "$SOUND_DISABLE_BLUETOOTH" ]]; then
   exit 0
 fi
 
-touch /shared/logs/bluetooth.logs
+exec touch /shared/logs/bluetooth.logs
 exec /usr/src/bluetooth-agent
