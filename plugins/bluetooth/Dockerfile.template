@@ -4,11 +4,4 @@ WORKDIR /usr/src
 
 COPY start.sh /usr/src/
 
-COPY restartpair.sh /usr/src/
-RUN chmod a+x /usr/src/restartpair.sh 
-
-RUN mkdir -p /shared/logs/
-RUN touch /shared/logs/bluetooth.logs
-RUN chmod a+rw /shared/logs/bluetooth.logs
-
 CMD [ "/bin/bash", "/usr/src/start.sh" ]
