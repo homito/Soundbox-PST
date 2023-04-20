@@ -4,4 +4,7 @@ WORKDIR /usr/src
 
 COPY start.sh /usr/src/
 
+COPY restartpair.sh /usr/src/
+RUN chmod a+x /usr/src/restartpair.sh 
+
 CMD [ "/bin/bash", "/usr/src/start.sh" ]
