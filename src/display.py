@@ -14,7 +14,7 @@ device = sh1106(serial, rotate=0)
 width = 128
 height = 64
 
-def displayParingWait():
+def displayPairingWait():
     isPaired = 0
     
     with canvas(device) as draw:
@@ -100,8 +100,8 @@ displayInit()
 devicePaired = 0
 soundChange = 0
 
-while devicePaired == 0:
-    print("waiting for pair")
+print("waiting for pair")
+devicePaired = displayPairingWait()
 print("device paired")
 
 while(1):
