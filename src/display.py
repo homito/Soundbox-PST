@@ -36,11 +36,12 @@ def displayTime():
     
 
 def displayService():
-    service = "Spotify"
+    service = "Bluetooth"
+
     draw.text((0, 0), service, fill="white")
 
 def displayMusicName():
-    draw.text((0, 0), metadata["Title"], fill="white")
+    draw.text((0, 0), metadata["Title"]+" - "+metadata["Artist"], fill="white")
 
 
 
@@ -50,11 +51,10 @@ def displayMusicDuration():
     durationMS = metadata["Duration"].split()
     durationMS = durationMS[1]
     
-    draw.text((0, 0), ConvertMS(timestampMs) +"/"+ ConvertMS(durationMS), fill="white")
+    draw.text((0, 0), ConvertMS(timestampMs) +" / "+ ConvertMS(durationMS), fill="white")
 
 def displaySound():
     sound = metadata["Volume"]
-    
     draw.text((0, 0), sound, fill="white")
 
 def displayInit():
@@ -105,11 +105,11 @@ while devicePaired == 0:
 print("device paired")
 
 while(1):
-    displayTime()
+    displayTime()       # ok
     displayService()
-    displayMusicName()
+    displayMusicName() # ok
     displayPairingDevice()
 
     if(soundChange == 1):
         displaySound()
-    displayMusicDuration()
+    displayMusicDuration() #ok
