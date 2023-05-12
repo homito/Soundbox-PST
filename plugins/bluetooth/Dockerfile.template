@@ -11,4 +11,4 @@ RUN mkdir -p /shared/logs/
 RUN touch /shared/logs/bluetooth.logs
 RUN chmod a+rw /shared/logs/bluetooth.logs
 
-CMD [ "/bin/bash", "/usr/src/start.sh" ]x
+CMD [ "/bin/bash", "/usr/src/start.sh" ]
