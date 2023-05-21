@@ -2,13 +2,15 @@ FROM bh.cr/balenalabs/bluetooth-%%BALENA_ARCH%%
 
 WORKDIR /usr/src
 
-COPY start.sh /usr/src/
+COPY logs.sh /usr/src/
+RUN chmod a+x /usr/src/logs.sh
 
 COPY restartpair.sh /usr/src/
 RUN chmod a+x /usr/src/restartpair.sh 
 
-RUN mkdir -p /shared/logs/
-RUN touch /shared/logs/bluetooth.logs
-RUN chmod a+rw /shared/logs/bluetooth.logs
+COPY bl-start /usr/src
+RUN chmod a+x /usr/src/bl-start
+
+COPY start.sh /usr/src/
 
 CMD [ "/bin/bash", "/usr/src/start.sh" ]

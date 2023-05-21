@@ -2,7 +2,6 @@ version: "2"
 
 volumes:
   spotifycache:
-  commons:
 
 services:
   # Core services
@@ -48,8 +47,6 @@ services:
       - NET_ADMIN
     labels:
       io.balena.features.dbus: 1
-    volumes:
-      - commons:/shared
 
   airplay:
     build: ./plugins/airplay
@@ -61,21 +58,11 @@ services:
 
   spotify:
     build: ./plugins/spotify
-    restart: always
+    restart: on-failure
     privileged: true
     network_mode: host
     volumes:
       - spotifycache:/var/cache/raspotify
-      - commons:/shared
-
-  python:
-    build:
-      context: .
-      dockerfile: ./plugins/python/Dockerfile.template
-    restart: on-failure
-    privileged: true
-    volumes:
-      - commons:/shared
 
   # https://github.com/balenablocks/hostname
   hostname:
