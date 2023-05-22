@@ -9,8 +9,6 @@ from luma.core.render import canvas
 from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
 import time
 
-from metadata import metadata
-
 
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial, rotate=0)
@@ -18,9 +16,20 @@ device = sh1106(serial, rotate=0)
 width = 128
 height = 64
 
+def displayTime():
+    t = time.localtime()
+    current_time = time.strftime("%T", t)
+    draw.text((0,0), current_time, fill="white")
 
+def displayPairingDevice():
+    devicename = "device"
+    draw.text((0, height-10), devicename, fill="white")
+
+
+print("lancemant du script")
 with canvas(device) as draw:
-    draw.text((0,0), "Hello, World!", fill="white")
+    displayTime()
+    displayPairingDevice()
 
 time.sleep(10)
 
