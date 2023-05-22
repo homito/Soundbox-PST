@@ -22,4 +22,4 @@ RUN pip install -t /usr/src/python-packages -r requirements.txt --no-cache-dir -
 
 COPY src/ .
 
-CMD ["python", "main.py"]
+CMD python3 main.py
