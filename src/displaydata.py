@@ -42,10 +42,10 @@ def getMetadata():
 
 # affiche le texte de logs.txt sur l'ecran
 def displayMetadata():
-    draw.text((0,0), metadata["Title"], fill="white")
-    draw.text((0,10), metadata["Artist"], fill="white")
+    draw.text((128/2 - len(metadata["Title"]*3),0), metadata["Title"], fill="white")
+    draw.text((128/2 - len(metadata["Artist"]*3),10), metadata["Artist"], fill="white")
     draw.text((0,20), metadata["Status"], fill="white")
-    draw.text((0,30), ConvertMS(int(metadata["Position"])) + "/" + ConvertMS(int(metadata["Duration"])), fill="white")
+    draw.text((0,30), ConvertMS(int(metadata["Position"])) + "/" + ConvertMS(int(metadata["Duration"])), fill="white") # might need to be removed since it's so slow
 
 def roundDown(var):
     if round(var) != round(var-0.5):

@@ -7,11 +7,11 @@ metadata = {
     "Artist": "unknown",
     "Album": "unknown", #should not be displayed
     "Status": "stopped", #or "playing"
-    "Position" : "0x00000000 (0)", #(0)in ms
-    "Duration": "0x00000000 (0)",
-    "TrackNumber": "0x00000000 (0)", #should not be displayed
-    "NumberOfTracks": "0x00000000 (0)", #should not be displayed
-    "Volume": "0x0000 (0)",
+    "Position" : 0, #(0)in ms
+    "Duration": 0,
+    "TrackNumber": 0, #should not be displayed
+    "NumberOfTracks": 0, #should not be displayed
+    "Volume": 0,
     "Device": "unknown"
 }
 
