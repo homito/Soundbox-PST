@@ -5,13 +5,14 @@ metadata = {
     "State": "pending", #or "active" or "idle"
     "Title": "Seul la musique",
     "Artist": "unkown",
-    "Album": "unkown",
+    "Album": "unkown", #should not be displayed
     "Status": "stopped", #or "playing"
     "Position" : "0x00000000 (0)", #(0)in ms
     "Duration": "0x00000000 (0)",
-    "TrackNumber": "0x00000000 (0)",
-    "NumberOfTracks": "0x00000000 (0)",
-    "Volume": "0x0000 (0)"
+    "TrackNumber": "0x00000000 (0)", #should not be displayed
+    "NumberOfTracks": "0x00000000 (0)", #should not be displayed
+    "Volume": "0x0000 (0)",
+    "Device": "unkown"
 }
 
 def follow(thefile):
@@ -34,18 +35,16 @@ def follow(thefile):
 def line_anal(line):
     # this function analyzes the content of each line and
     # uptades the metadata dictionnary according to the current info
-    if line[0:5] == "[CHG]":
-        split = str.split()
-        key = split[3]
-        key = key[0:len(key)-1]
-
-        value = []
-        for i in range(0, len(split)-4):
-            value.append(split[4+i])
-        value = ' '.join(value)
-
-        metadata[key] = value
-        return 1
+    for key in metadata:    # this is not a particularly efficient way to do this, but that's the first thing that came to mind
+        index = line.find(key)
+        if(index != -1):
+            if(line.find("Volume") != -1) or (line.find("Position") != -1) or (line.find("Duration") != -1):
+                metadata[key] = line[line.find("(")+1:line.find(")")] #TBD
+                print(metadata[key])
+                return 1
+            metadata[key] = line[index+len(key)+2:-1]
+            print(metadata[key])
+            return 1
     return 0
 
 file = "/shared/logs/bluetooth.log"
