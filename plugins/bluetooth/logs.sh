@@ -1,2 +1,2 @@
 #!/bin/bash
-bluetoothctl | tee -a bluetooth.log
+bluetoothctl | tee -a /shared/logs/bluetooth.log

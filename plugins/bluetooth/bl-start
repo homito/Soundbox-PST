@@ -153,15 +153,6 @@ if __name__ == "__main__":
     # Log agent info
     print("Bluetooth agent started!")
 
-    # custom code
-    print("initiating logs")
-    try:
-        os.system("./logs.sh")
-    except:
-        print("failed to initiate logs")
-    # end custom code
-
-
     # Reestablish connection with previously connected devices
     bluez_manager = dbus_get_interface("org.bluez", "/", "org.freedesktop.DBus.ObjectManager")
     bluez_objects = bluez_manager.GetManagedObjects()
@@ -198,6 +189,15 @@ if __name__ == "__main__":
                 break
             else:
                 print("- Could not connect to %s (%s)..." % (props["Name"], props["Address"]))
+    
+    # custom code
+    print("initiating logs")
+    try:
+        os.system("./logs.sh")
+    except:
+        print("failed to initiate logs")
+    # end custom code
+
 
     mainloop = GLib.MainLoop()
     mainloop.run()

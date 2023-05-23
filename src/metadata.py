@@ -48,7 +48,7 @@ def line_anal(line):
         return 1
     return 0
 
-file = "/shared/logs/bluetooth.logs"
+file = "/shared/logs/bluetooth.log"
 
 logfile = open(file, "r")
 loglines = follow(logfile)

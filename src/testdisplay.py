@@ -17,21 +17,15 @@ width = 128
 height = 64
 
 def displayTime():
-    t = time.localtime()
-    current_time = time.strftime("%T", t)
-    draw.text((0,0), current_time, fill="white")
+    draw.text((0,0), "aaaaabbbbbcccccddddde", fill="white")
 
-def displayPairingDevice():
-    devicename = "device"
-    draw.text((0, height-10), devicename, fill="white")
 
 
 print("lancemant du script")
 with canvas(device) as draw:
     displayTime()
-    displayPairingDevice()
 
-time.sleep(10)
+time.sleep(20)
 
 
 
