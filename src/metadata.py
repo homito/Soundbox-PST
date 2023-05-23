@@ -54,4 +54,7 @@ loglines = follow(logfile)
 
 for line in loglines:
     line_anal(line)
-    print(metadata)
+    txt = open("/usr/src/app/logs.txt", "w")
+    for key in metadata:
+        txt.write(key + " : " + metadata[key]+"\n")
+    txt.close()

@@ -13,4 +13,7 @@ RUN sudo -H pip3 install luma.oled
 
 COPY src/ .
 
+RUN touch /usr/src/app/logs.txt
+RUN chmod 777 /usr/src/app/logs.txt
+
 CMD python3 main.py

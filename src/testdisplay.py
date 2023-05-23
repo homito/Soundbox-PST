@@ -16,16 +16,24 @@ device = sh1106(serial, rotate=0)
 width = 128
 height = 64
 
-def displayTime():
+def displayLimit():
     draw.text((0,0), "aaaaabbbbbcccccddddde", fill="white")
+
+
+def displayTime():
+    t = time.localtime()
+    current_time = time.strftime("%H:%M", t)
+    draw.text((0, 0), current_time, fill="white")
 
 
 
 print("lancemant du script")
-with canvas(device) as draw:
-    displayTime()
-
-time.sleep(20)
+i = 0
+while(i < 100):
+    with canvas(device) as draw:
+        displayTime()
+    time.sleep(1)
+    i += 1
 
 
 
