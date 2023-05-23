@@ -3,16 +3,16 @@ import os
 
 metadata = {
     "State": "pending", #or "active" or "idle"
-    "Title": "Seul la musique",
-    "Artist": "unkown",
-    "Album": "unkown", #should not be displayed
+    "Title": "unknown",
+    "Artist": "unknown",
+    "Album": "unknown", #should not be displayed
     "Status": "stopped", #or "playing"
     "Position" : "0x00000000 (0)", #(0)in ms
     "Duration": "0x00000000 (0)",
     "TrackNumber": "0x00000000 (0)", #should not be displayed
     "NumberOfTracks": "0x00000000 (0)", #should not be displayed
     "Volume": "0x0000 (0)",
-    "Device": "unkown"
+    "Device": "unknown"
 }
 
 def follow(thefile):

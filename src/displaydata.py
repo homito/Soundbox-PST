@@ -10,16 +10,16 @@ import os
 
 metadata = {
     "State": "pending", #or "active" or "idle"
-    "Title": "Seul la musique",
-    "Artist": "unkown",
-    "Album": "unkown", #should not be displayed
+    "Title": "unknown",
+    "Artist": "unknown",
+    "Album": "unknown", #should not be displayed
     "Status": "stopped", #or "playing"
-    "Position" : "0x00000000 (0)", #(0)in ms
-    "Duration": "0x00000000 (0)",
-    "TrackNumber": "0x00000000 (0)", #should not be displayed
-    "NumberOfTracks": "0x00000000 (0)", #should not be displayed
-    "Volume": "0x0000 (0)",
-    "Device": "unkown"
+    "Position" : 0,
+    "Duration": 0,
+    "TrackNumber": 0, #should not be displayed
+    "NumberOfTracks": "0", #should not be displayed
+    "Volume": 0,
+    "Device": "unknown"
 }
 
 serial = i2c(port=1, address=0x3C)
@@ -44,10 +44,36 @@ def getMetadata():
 def displayMetadata():
     draw.text((0,0), metadata["Title"], fill="white")
     draw.text((0,10), metadata["Artist"], fill="white")
-    draw.text((0,20), metadata["Album"], fill="white")
-    draw.text((0,30), metadata["Status"], fill="white")
-    draw.text((0,40), metadata["Position"], fill="white")
-    draw.text((0,50), metadata["Duration"], fill="white")
+    draw.text((0,20), metadata["Status"], fill="white")
+    draw.text((0,30), ConvertMS(int(metadata["Position"])) + "/" + ConvertMS(int(metadata["Duration"])), fill="white")
+
+def roundDown(var):
+    if round(var) != round(var-0.5):
+        return round(var-0.5)
+    return round(var)
+
+def ConvertMS(miliseconds):
+    # convert a time in miliseconds to one in hh:mm:ss format
+    seconds = roundDown(miliseconds/1000)
+
+    minutes = roundDown(seconds/60)
+    seconds = seconds - minutes*60
+
+    hours = roundDown(minutes/60)
+    minutes = minutes - hours*60
+
+    time = []
+    if hours>0:
+        time.append(str(hours)+':')
+        if minutes<10:
+            time.append(0)
+    time.append(str(minutes)+':')
+    if seconds<10:
+        time.append('0')
+    time.append(str(seconds))
+
+    time = ''.join(time)
+    return time
 
 i = 0
 while(i<1000):
