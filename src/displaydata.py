@@ -17,11 +17,11 @@ metadata = {
     "Artist": "unknown",
     "Album": "unknown", #should not be displayed
     "Status": "stopped", #or "playing"
-    "Position" : 0,
-    "Duration": 0,
-    "TrackNumber": 0, #should not be displayed
-    "NumberOfTracks": 0, #should not be displayed
-    "Volume": 0,
+    "Position" : "0",
+    "Duration": "0",
+    "TrackNumber": "0", #should not be displayed
+    "NumberOfTracks": "0", #should not be displayed
+    "Volume": "0",
     "Device": "unknown"
 }
 
@@ -33,12 +33,20 @@ height = 64
 
 file = "/usr/src/app/logs.txt"
 
+def specialSort(str):
+    # this functions takes a string as an input and returns another string without any special characters if there were any
+    for c in str:
+        if not (c.isascii()):
+            str = str.replace(c, "?")
+    return str
+    
+
 def getMetadata():
     txt = open(file, "r")
     lines = txt.readlines()
     for line in lines:
         key = line[:line.find(":")-1]
-        value = line[line.find(":")+2:-1]
+        value = specialSort(line[line.find(":")+2:-1])
         metadata[key] = value
     txt.close()
 
@@ -82,16 +90,19 @@ def ConvertMS(miliseconds):
     return time
 
 i = 0
-while(i<1000):
+while(True):
     with canvas(device) as draw:
-        if i<20:
-            displayInitScreen()
-        elif i<40:
-            draw.text((0,0), "Loading...", fill="white")
-        else:
+        try:
             try:
                 getMetadata()
-                displayMetadata()
             except:
-                print("Error")
+                pass
+            displayMetadata()
+        except:
+            if(i<40):
+                displayInitScreen()
+            else:
+                draw.text((0,0), "Loading...", fill="white")
     i += 1
+
+#known issues: special characters break everything

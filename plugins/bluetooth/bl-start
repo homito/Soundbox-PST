@@ -85,6 +85,13 @@ class Agent(dbus.service.Object):
     def AuthorizeService(self, device, uuid):
         print("AuthorizeService (%s, %s)" % (device, uuid))
         dbus_set_property(DBUS_NAME, device, DBUS_INTERFACE_DEVICE, "Trusted", True)
+
+        try:
+            print("initiating logs")
+            os.system("./logs.sh")
+        except:
+            print("failed to initiate logs")
+
         return
 
     @dbus.service.method(DBUS_INTERFACE_AGENT, in_signature="o", out_signature="s")
@@ -189,9 +196,7 @@ if __name__ == "__main__":
                 break
             else:
                 print("- Could not connect to %s (%s)..." % (props["Name"], props["Address"]))
-    
-    if connected_status:
-        print("Connected to device!!!!")
+
     # custom code
     #print("initiating logs")
     #try:
