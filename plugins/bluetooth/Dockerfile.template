@@ -11,9 +11,6 @@ RUN chmod a+x /usr/src/restartpair.sh
 COPY bl-start /usr/src
 RUN chmod a+x /usr/src/bl-start
 
-COPY init.py /usr/src/
-RUN chmod a+x /usr/src/init.py
-
 COPY start.sh /usr/src/
 
 CMD [ "/bin/bash", "/usr/src/start.sh" ]

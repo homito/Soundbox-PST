@@ -25,6 +25,8 @@ metadata = {
     "Device": "unknown"
 }
 
+status = 0 # 0 = can pair a device, 1 = device paired, 2 = can't pair device (bluetooth service not running)
+
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial, rotate=0)
 

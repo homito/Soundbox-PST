@@ -89,6 +89,7 @@ class Agent(dbus.service.Object):
         try:
             print("initiating logs")
             os.system("./logs.sh")
+            os.system("echo 1 > /shared/logs/status.txt")
         except:
             print("failed to initiate logs")
 
