@@ -17,3 +17,16 @@ Le projet tournant sous balenaOS, il faut déployer l'application avec balena Cl
 [![deploy button](https://balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/balena-labs-projects/balena-sound&defaultDeviceType=raspberry-pi)
 
 ![concept](https://raw.githubusercontent.com/homito/Soundbox-PST/main/docs/images/cablage.png)
+
+## Known issues
+
+- **charactères spéciaux**: Les charactères spéciaux sont remplacés par des '?' sur l'affichage de l'écran.
+- **Wi-fi**: La soundbox ne peut pour l'instant pas se connecter à un réseau wi-fi, elle utilisera donc uniquema la connectivité bluetooth. 
+- **PIN ou clé de sécurtié incorrecte**: Ce problème intervient lorsqu'on discocie un la soundbox depuis un appareil qui était déjà connecté, dans cette situation, appuyer sur le bouton prévu pour, attendre 5 à 10 secondes et re-connectez vous à la Soundbox.
+
+
+## To-do list
+
+- **Wi-fi**: Pouvoir connecter la soundbox en wi-fi pour utiliser spotify et autres services.
+- **Spotify**: Pas de connectivité spotify car pas de gestion wi-fi pour l'instant
+- **Airplay**: pas de connectivité airplay pour l'instant mais les appareils apple peuvent evidemment utiliser la bluetooth.
