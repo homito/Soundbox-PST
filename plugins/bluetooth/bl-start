@@ -190,12 +190,14 @@ if __name__ == "__main__":
             else:
                 print("- Could not connect to %s (%s)..." % (props["Name"], props["Address"]))
     
+    if connected_status:
+        print("Connected to device!!!!")
     # custom code
-    print("initiating logs")
-    try:
-        os.system("./logs.sh")
-    except:
-        print("failed to initiate logs")
+    #print("initiating logs")
+    #try:
+    #    os.system("./logs.sh")
+    #except:
+    #    print("failed to initiate logs")
     # end custom code
 
 

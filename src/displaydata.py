@@ -5,6 +5,9 @@ from luma.core.interface.serial import i2c
 from luma.core.render import canvas
 from luma.oled.device import ssd1306, ssd1325, ssd1331, sh1106
 
+from pathlib import Path
+from PIL import ImageFont, Image
+
 import time
 import os
 
@@ -17,7 +20,7 @@ metadata = {
     "Position" : 0,
     "Duration": 0,
     "TrackNumber": 0, #should not be displayed
-    "NumberOfTracks": "0", #should not be displayed
+    "NumberOfTracks": 0, #should not be displayed
     "Volume": 0,
     "Device": "unknown"
 }
@@ -30,7 +33,6 @@ height = 64
 
 file = "/usr/src/app/logs.txt"
 
-# prends le texte de logs.txt et le mets dans metadata
 def getMetadata():
     txt = open(file, "r")
     lines = txt.readlines()
@@ -40,12 +42,16 @@ def getMetadata():
         metadata[key] = value
     txt.close()
 
-# affiche le texte de logs.txt sur l'ecran
 def displayMetadata():
     draw.text((128/2 - len(metadata["Title"]*3),0), metadata["Title"], fill="white")
     draw.text((128/2 - len(metadata["Artist"]*3),10), metadata["Artist"], fill="white")
-    draw.text((0,20), metadata["Status"], fill="white")
-    draw.text((0,30), ConvertMS(int(metadata["Position"])) + "/" + ConvertMS(int(metadata["Duration"])), fill="white") # might need to be removed since it's so slow
+    draw.text((0,50), metadata["Device"], fill="white")
+
+def displayInitScreen():
+    w, h = draw.textsize('SOUNDBOX')
+    left = (width - w) / 2
+    top = (height - h) / 2
+    draw.text((left, top), 'SOUNDBOX', fill="white")
 
 def roundDown(var):
     if round(var) != round(var-0.5):
@@ -78,6 +84,14 @@ def ConvertMS(miliseconds):
 i = 0
 while(i<1000):
     with canvas(device) as draw:
-        getMetadata()
-        displayMetadata()
+        if i<20:
+            displayInitScreen()
+        elif i<40:
+            draw.text((0,0), "Loading...", fill="white")
+        else:
+            try:
+                getMetadata()
+                displayMetadata()
+            except:
+                print("Error")
     i += 1
