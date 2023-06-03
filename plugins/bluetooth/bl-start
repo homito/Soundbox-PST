@@ -153,6 +153,13 @@ if __name__ == "__main__":
     # Log agent info
     print("Bluetooth agent started!")
 
+    os.system("touch /shared/logs/data.log")
+    os.system("chmod 777 /shared/logs/data.log")
+
+    print("created shared button file")
+
+    os.system("python logs.py &")
+
     # Reestablish connection with previously connected devices
     bluez_manager = dbus_get_interface("org.bluez", "/", "org.freedesktop.DBus.ObjectManager")
     bluez_objects = bluez_manager.GetManagedObjects()
