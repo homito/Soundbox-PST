@@ -19,7 +19,20 @@ def getData():
         if (line.find("State") != -1) and (line.find("1") != -1) and logs_init == False:
             # will be done once per session
             txt.close()
-            os.system("./logs.sh")
+            
+            #checks pid for if logs.sh is running
+            pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
+
+            for pid in pids:
+                try:
+                    print(open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()) # print the process name
+                    pid_name = open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()
+                    if pid_name.find("logs.sh") == -1:
+                        os.system("./logs.sh")
+                except:
+                    continue
+
+
             logs_init = True
             return 1
         
@@ -36,7 +49,10 @@ pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
 
 for pid in pids:
     try:
-        print(open(os.path.join('/proc', pid, 'cmdline'), 'rb').read())
+        print(open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()) # print the process name
+        pid_name = open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()
+        if pid_name.find("logs.sh") == -1:
+            os.system("./logs.sh")
     except:
         continue
 
