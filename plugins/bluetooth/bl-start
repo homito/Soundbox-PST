@@ -153,6 +153,8 @@ if __name__ == "__main__":
     # Log agent info
     print("Bluetooth agent started!")
 
+    if os.path.exists("/shared/logs/data.log") == True:
+        os.remove("/shared/logs/data.log")
     os.system("touch /shared/logs/data.log")
     os.system("chmod 777 /shared/logs/data.log")
 

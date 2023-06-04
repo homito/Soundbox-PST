@@ -26,7 +26,6 @@ while True:
         if os.path.exists(ButtonData) == True:
             txt = open(ButtonData, "r")
             txt.write("State: 1")
-
             txt.close()
 
     if input_stateE == False:

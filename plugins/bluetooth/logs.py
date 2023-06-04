@@ -1,4 +1,6 @@
 import os
+import subprocess
+import sys
 import time
 
 file_data = "/shared/logs/data.log"
@@ -15,46 +17,42 @@ def getData():
     
     txt = open(file_data, "r")
     lines = txt.readlines()
+
+    print(lines) #debug line 
+
     for line in lines:
-        if (line.find("State") != -1) and (line.find("1") != -1) and logs_init == False:
+        if (line.find("State: 1") != -1) and logs_init == False:
             # will be done once per session
             txt.close()
             
             #checks pid for if logs.sh is running
             pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
 
+            slip = ''
             for pid in pids:
                 try:
                     print(open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()) # print the process name
                     pid_name = open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()
-                    if pid_name.find("logs.sh") == -1:
-                        os.system("./logs.sh")
+                    slip += pid_name
                 except:
                     continue
-
-
-            logs_init = True
-            return 1
+            
+            if (slip.find("logs.sh") == -1):
+                #starts logs.sh in the background
+                #PTN AAAA
+                
+                cmd = subprocess.Popen("./logs.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+                #os.system("bluetoothctl | tee -a /shared/logs/bluetooth.log &")
+                logs_init = True
+                return 1
         
-        if (line.find("Reset") != -1) and (line.find("1") != -1):
+        if (line.find("Reset: 1") != -1):
             txt.replace("Reset: 1", "Reset: 0")
             txt.close()
             os.system("./restartpair.sh")
             return 1
     txt.close()
     return 0
-
-
-pids = [pid for pid in os.listdir('/proc') if pid.isdigit()]
-
-for pid in pids:
-    try:
-        print(open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()) # print the process name
-        pid_name = open(os.path.join('/proc', pid, 'cmdline'), 'rb').read()
-        if pid_name.find("logs.sh") == -1:
-            os.system("./logs.sh")
-    except:
-        continue
 
 
 while True:
