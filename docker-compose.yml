@@ -42,7 +42,7 @@ services:
   # -- Remove unwanted plugins as needed
   bluetooth:
     build: ./plugins/bluetooth
-    restart: on-failure
+    restart: unless-stopped
     network_mode: host
     cap_add:
       - NET_ADMIN
@@ -72,7 +72,7 @@ services:
     build:
       context: .
       dockerfile: ./plugins/python/Dockerfile.template
-    restart: on-failure
+    restart: unless-stopped
     privileged: true
     volumes:
       - commons:/shared

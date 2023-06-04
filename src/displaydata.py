@@ -28,6 +28,8 @@ metadata = {
 }
 
 State = 0 # 0 = not paired, 1 = paired
+view1 = 0
+view2 = 0
 
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial, rotate=0)
@@ -56,10 +58,13 @@ def getMetadata():
     txt.close()
 
 def displayMetadata():
+    global view1
+    global view2
+
     now = time.strftime("%H:%M")
     draw.text((0,0), now, fill="white")
 
-    if metadata["Title"] == "unknown" and metadata["Artist"] == "unknown":
+    if metadata["Title"] == "unknown" or metadata["Artist"] == "unknown" or metadata["Title"] == "unknow" or metadata["Artist"] == "unknow":
         w, h = draw.textsize("Waiting for music...")
         left = (width - w) / 2
         top = (height - h) / 2
@@ -67,12 +72,28 @@ def displayMetadata():
         return
     
     w, h = draw.textsize(metadata["Title"])
-    left = (width - w) / 2
+    if w > width:
+        view1 += 1 
+    else:
+        view1 = 0
+
+    left = ((width - w) / 2) + view1
+    if left > width:
+        view1 = 0
+        left = width - w
     top = (height - h) / 2
     draw.text((left, top), metadata["Title"], fill="white")
 
     w, h = draw.textsize(metadata["Artist"])
-    left = (width - w) / 2
+    if w > width:
+        view2 += 1
+    else:
+        view2 = 0
+
+    left = ((width - w) / 2) + view2
+    if left > width:
+        view2 = 0
+        left = width - w
     top = ((height - h) / 2) + 10
     draw.text((left, top), metadata["Artist"], fill="white")
 
@@ -100,7 +121,7 @@ def displayPairingScreen():
             break
     draw.text((left, top), 'Waiting for pairing.', fill="white")
 
-i = 0
+
 while(True):
     with canvas(device) as draw:
         try:
@@ -117,7 +138,5 @@ while(True):
                 print("ERROR: 1 - problem on display")
             except:
                 print("ERROR: 2 - final problem on display")
-
-    i += 1
 
 #known issues: special characters break everything
