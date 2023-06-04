@@ -10,6 +10,8 @@ from PIL import ImageFont, Image
 
 import time
 import os
+import subprocess
+import sys
 
 metadata = {
     "State": "pending", #or "active" or "idle"
@@ -25,7 +27,7 @@ metadata = {
     "Device": "unknown"
 }
 
-status = 0 # 0 = can pair a device, 1 = device paired, 2 = can't pair device (bluetooth service not running)
+State = 0 # 0 = not paired, 1 = paired
 
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial, rotate=0)
@@ -34,6 +36,7 @@ width = 128
 height = 64
 
 file = "/usr/src/app/logs.txt"
+file_data = "/shared/logs/data.log"
 
 def specialSort(str):
     # this functions takes a string as an input and returns another string without any special characters if there were any
@@ -53,58 +56,68 @@ def getMetadata():
     txt.close()
 
 def displayMetadata():
-    draw.text((128/2 - len(metadata["Title"]*3),0), metadata["Title"], fill="white")
-    draw.text((128/2 - len(metadata["Artist"]*3),10), metadata["Artist"], fill="white")
-    draw.text((0,50), metadata["Device"], fill="white")
+    now = time.strftime("%H:%M")
+    draw.text((0,0), now, fill="white")
 
-def displayInitScreen():
+    w, h = draw.textsize(metadata["Title"])
+    left = (width - w) / 2
+    top = (height - h) / 2
+    draw.text((left, top), metadata["Title"], fill="white")
+
+    w, h = draw.textsize(metadata["Artist"])
+    left = (width - w) / 2
+    top = ((height - h) / 2) + 10
+    draw.text((left, top), metadata["Artist"], fill="white")
+
+
+    #draw.text((128/2 - len(metadata["Title"]*3),0), metadata["Title"], fill="white")
+    #draw.text((128/2 - len(metadata["Artist"]*3),10), metadata["Artist"], fill="white")
+
+def displayBootScreen():
     w, h = draw.textsize('SOUNDBOX')
     left = (width - w) / 2
     top = (height - h) / 2
     draw.text((left, top), 'SOUNDBOX', fill="white")
 
-def roundDown(var):
-    if round(var) != round(var-0.5):
-        return round(var-0.5)
-    return round(var)
+def displayPairingScreen():
+    global State
+    w, h = draw.textsize('Waiting for pairing.')
+    left = (width - w) / 2
+    top = (height - h) / 2
 
-def ConvertMS(miliseconds):
-    # convert a time in miliseconds to one in hh:mm:ss format
-    seconds = roundDown(miliseconds/1000)
+    txt = open(file_data, "r")
+    for i in range(0,3):
+        lines = txt.readlines()
+        for line in lines:
+            if (line.find("State: 1") != -1):
+                State = 1
+                break
 
-    minutes = roundDown(seconds/60)
-    seconds = seconds - minutes*60
-
-    hours = roundDown(minutes/60)
-    minutes = minutes - hours*60
-
-    time = []
-    if hours>0:
-        time.append(str(hours)+':')
-        if minutes<10:
-            time.append(0)
-    time.append(str(minutes)+':')
-    if seconds<10:
-        time.append('0')
-    time.append(str(seconds))
-
-    time = ''.join(time)
-    return time
+        if i == 0:
+            draw.text((left, top), 'Waiting for pairing.', fill="white")
+        elif i == 1:
+            draw.text((left, top), 'Waiting for pairing..', fill="white")
+        elif i == 2:
+            draw.text((left, top), 'Waiting for pairing...', fill="white")
+        time.sleep(0.5)
 
 i = 0
 while(True):
     with canvas(device) as draw:
         try:
-            try:
+            if os.path.exists(file_data) == False:
+                displayBootScreen()
+            elif State == 0:
+                displayPairingScreen()
+            elif State == 1:
                 getMetadata()
-            except:
-                pass
-            displayMetadata()
+                displayMetadata()
         except:
-            if(i<40):
-                displayInitScreen()
-            else:
-                draw.text((0,0), "Loading...", fill="white")
+            displayBootScreen()
+            print("ERROR: 1 - problem on display")
+        finally:
+            print("ERROR: 2 - final problem on display")
+
     i += 1
 
 #known issues: special characters break everything

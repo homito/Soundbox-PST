@@ -39,10 +39,7 @@ def getData():
             
             if (slip.find("logs.sh") == -1):
                 #starts logs.sh in the background
-                #PTN AAAA
-                
                 cmd = subprocess.Popen("./logs.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-                #os.system("bluetoothctl | tee -a /shared/logs/bluetooth.log &")
                 logs_init = True
                 return 1
         
