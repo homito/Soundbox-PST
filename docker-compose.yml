@@ -77,7 +77,7 @@ services:
     volumes:
       - commons:/shared
     environment:
-      - TZ="Europe/Paris"
+      - TZ=Europe/Paris
 
   # https://github.com/balenablocks/hostname
   hostname:

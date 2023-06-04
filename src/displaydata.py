@@ -59,6 +59,13 @@ def displayMetadata():
     now = time.strftime("%H:%M")
     draw.text((0,0), now, fill="white")
 
+    if metadata["Title"] == "unknown" and metadata["Artist"] == "unknown":
+        w, h = draw.textsize("Waiting for music...")
+        left = (width - w) / 2
+        top = (height - h) / 2
+        draw.text((left, top), "Waiting for music...", fill="white")
+        return
+    
     w, h = draw.textsize(metadata["Title"])
     left = (width - w) / 2
     top = (height - h) / 2
@@ -86,20 +93,12 @@ def displayPairingScreen():
     top = (height - h) / 2
 
     txt = open(file_data, "r")
-    for i in range(0,3):
-        lines = txt.readlines()
-        for line in lines:
-            if (line.find("State: 1") != -1):
-                State = 1
-                break
-
-        if i == 0:
-            draw.text((left, top), 'Waiting for pairing.', fill="white")
-        elif i == 1:
-            draw.text((left, top), 'Waiting for pairing..', fill="white")
-        elif i == 2:
-            draw.text((left, top), 'Waiting for pairing...', fill="white")
-        time.sleep(0.5)
+    lines = txt.readlines()
+    for line in lines:
+        if (line.find("State: 1") != -1):
+            State = 1
+            break
+    draw.text((left, top), 'Waiting for pairing.', fill="white")
 
 i = 0
 while(True):
@@ -113,10 +112,11 @@ while(True):
                 getMetadata()
                 displayMetadata()
         except:
-            displayBootScreen()
-            print("ERROR: 1 - problem on display")
-        finally:
-            print("ERROR: 2 - final problem on display")
+            try:
+                displayBootScreen()
+                print("ERROR: 1 - problem on display")
+            except:
+                print("ERROR: 2 - final problem on display")
 
     i += 1
 
