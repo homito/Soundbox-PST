@@ -57,10 +57,40 @@ def getMetadata():
         metadata[key] = value
     txt.close()
 
-def displayMetadata():
+def displayText(meta, y):
     global view1
     global view2
+    w, h = draw.textsize(meta)
+    if w > width:
+        if y != 10:
+            view1 += 1
+        else:
+            view2 += 1
+    else:
+        if y != 10:
+            view1 = 0
+        else:
+            view2 = 0
 
+    if y != 10 and (((width - w) / 2) + view1) > width:
+        view1 = -((width - w) / 2) - w
+    elif y == 10 and (((width - w) / 2) + view2) > width:
+        view2 = -((width - w) / 2) - w
+
+
+    if y != 10:
+        left = ((width - w) / 2) + view1
+    else:
+        left = ((width - w) / 2) + view2
+    
+    print(y, left)
+
+    top = (height - h) / 2 + y
+    draw.text((left, top), meta, fill="white")
+
+
+
+def displayMetadata():
     now = time.strftime("%H:%M")
     draw.text((0,0), now, fill="white")
 
@@ -71,35 +101,8 @@ def displayMetadata():
         draw.text((left, top), "Waiting for music...", fill="white")
         return
     
-    w, h = draw.textsize(metadata["Title"])
-    if w > width:
-        view1 += 1 
-    else:
-        view1 = 0
-
-    left = ((width - w) / 2) + view1
-    if left > width:
-        view1 = 0
-        left = width - w
-    top = (height - h) / 2
-    draw.text((left, top), metadata["Title"], fill="white")
-
-    w, h = draw.textsize(metadata["Artist"])
-    if w > width:
-        view2 += 1
-    else:
-        view2 = 0
-
-    left = ((width - w) / 2) + view2
-    if left > width:
-        view2 = 0
-        left = width - w
-    top = ((height - h) / 2) + 10
-    draw.text((left, top), metadata["Artist"], fill="white")
-
-
-    #draw.text((128/2 - len(metadata["Title"]*3),0), metadata["Title"], fill="white")
-    #draw.text((128/2 - len(metadata["Artist"]*3),10), metadata["Artist"], fill="white")
+    displayText(metadata["Title"], 0)
+    displayText(metadata["Artist"], 10)
 
 def displayBootScreen():
     w, h = draw.textsize('SOUNDBOX')
